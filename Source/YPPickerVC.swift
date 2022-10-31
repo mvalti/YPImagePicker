@@ -37,7 +37,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     }
     
     private var libraryVC: YPLibraryVC?
-    private var cameraVC: YPCameraVC?
+    public var cameraVC: YPCameraVC?
     private var videoVC: YPVideoCaptureVC?
     
     var mode = Mode.camera
@@ -65,9 +65,10 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         // Camera
         if YPConfig.screens.contains(.photo) {
             cameraVC = YPCameraVC()
-            cameraVC?.didCapturePhoto = { [weak self] img in
-                self?.didSelectItems?([YPMediaItem.photo(p: YPMediaPhoto(image: img,
-                                                                         fromCamera: true))])
+            cameraVC?.didCapturePhotos = { [weak self] images in
+                let items: [YPMediaItem] = images.map { YPMediaItem.photo(p: YPMediaPhoto(image: $0,
+                                                                                            fromCamera: true)) }
+                self?.didSelectItems?(items)
             }
         }
         

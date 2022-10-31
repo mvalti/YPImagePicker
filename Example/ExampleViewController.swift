@@ -53,6 +53,11 @@ class ExampleViewController: UIViewController {
         view.addSubview(pickButton)
         pickButton.center = view.center
         view.addSubview(resultsButton)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.showPicker()
+
+        })
     }
 
     @objc
@@ -87,7 +92,7 @@ class ExampleViewController: UIViewController {
         // config.targetImageSize = .cappedTo(size: 1024)
 
         /* Choose what media types are available in the library. Defaults to `.photo` */
-        config.library.mediaType = .photoAndVideo
+        config.library.mediaType = .photo
 		config.library.itemOverlayType = .grid
         /* Enables selecting the front camera by default, useful for avatars. Defaults to false */
         // config.usesFrontCamera = true
@@ -117,11 +122,11 @@ class ExampleViewController: UIViewController {
 
         /* Defines which screen is shown at launch. Video mode will only work if `showsVideo = true`.
            Default value is `.photo` */
-        config.startOnScreen = .library
+        config.startOnScreen = .photo
 
         /* Defines which screens are shown at launch, and their order.
            Default value is `[.library, .photo]` */
-        config.screens = [.library, .photo, .video]
+        config.screens = [.photo]
 
         /* Can forbid the items with very big height with this property */
         config.library.minWidthForItem = UIScreen.main.bounds.width * 0.8

@@ -9,12 +9,13 @@
 import UIKit
 import Stevia
 
-internal class YPCameraView: UIView, UIGestureRecognizerDelegate {
+public class YPCameraView: UIView, UIGestureRecognizerDelegate {
     let focusView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 90))
     let previewViewContainer = UIView()
     let buttonsContainer = UIView()
     let flipButton = UIButton()
     let shotButton = UIButton()
+    public let doneButton = UIButton()
     let flashButton = UIButton()
     let timeElapsedLabel = UILabel()
     let progressBar = UIProgressView()
@@ -33,7 +34,8 @@ internal class YPCameraView: UIView, UIGestureRecognizerDelegate {
                 flipButton,
                 buttonsContainer.subviews(
                     shotButton
-                )
+                ),
+                doneButton
             )
         } else {
             // View Hierarchy
@@ -45,7 +47,8 @@ internal class YPCameraView: UIView, UIGestureRecognizerDelegate {
                 flipButton,
                 buttonsContainer.subviews(
                     shotButton
-                )
+                ),
+                doneButton
             )
         }
         
@@ -60,6 +63,8 @@ internal class YPCameraView: UIView, UIGestureRecognizerDelegate {
                 |progressBar|,
                 0,
                 |buttonsContainer|,
+                0,
+                |doneButton|,
                 0
             )
             
@@ -110,5 +115,7 @@ internal class YPCameraView: UIView, UIGestureRecognizerDelegate {
         flashButton.setImage(YPConfig.icons.flashOffIcon, for: .normal)
         flipButton.setImage(YPConfig.icons.loopIcon, for: .normal)
         shotButton.setImage(YPConfig.icons.capturePhotoImage, for: .normal)
+        doneButton.setTitle("", for: .normal)
+        doneButton.setTitleColor(.white, for: .normal)
     }
 }

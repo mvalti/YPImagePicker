@@ -24,22 +24,22 @@ public struct YPColors {
     public var multipleItemsSelectedCircleColor: UIColor?
     
     /// The background color of the bottom of photo and video screens.
-    public var photoVideoScreenBackgroundColor: UIColor = .offWhiteOrBlack
+    public var photoVideoScreenBackgroundColor: UIColor = .black
 
     /// The background color of the library and space between collection view cells.
-    public var libraryScreenBackgroundColor: UIColor = .offWhiteOrBlack
+    public var libraryScreenBackgroundColor: UIColor = .black
 
     /// The background color of safe area. For example under the menu items.
-    public var safeAreaBackgroundColor: UIColor = .offWhiteOrBlack
+    public var safeAreaBackgroundColor: UIColor = .black
 
     /// A color for background of the asset container. You can see it when bouncing the image.
-    public var assetViewBackgroundColor: UIColor = .offWhiteOrBlack
+    public var assetViewBackgroundColor: UIColor = .black
     
     /// A color for background in filters.
-    public var filterBackgroundColor: UIColor = .offWhiteOrBlack
+    public var filterBackgroundColor: UIColor = .black
 
     /// A color for background in selections gallery. When multiple items selected.
-    public var selectionsBackgroundColor: UIColor = .offWhiteOrBlack
+    public var selectionsBackgroundColor: UIColor = .black
 
     /// A color for bottom buttons (photo, video, all photos).
     public var bottomMenuItemBackgroundColor: UIColor = .clear
@@ -54,7 +54,7 @@ public struct YPColors {
     public var cropOverlayColor: UIColor = UIColor.ypSystemBackground.withAlphaComponent(0.4)
 
     /// The default color of all navigation bars except album's.
-    public var defaultNavigationBarColor: UIColor = .offWhiteOrBlack
+    public var defaultNavigationBarColor: UIColor = .black
 
     // MARK: - Trimmer
     
@@ -68,7 +68,7 @@ public struct YPColors {
     // MARK: - Cover selector
     
     /// The color of the cover selector border
-    public var coverSelectorBorderColor: UIColor = .offWhiteOrBlack
+    public var coverSelectorBorderColor: UIColor = .black
     
     // MARK: - Progress bar
     

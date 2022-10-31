@@ -9,16 +9,18 @@
 import UIKit
 import AVFoundation
 import Photos
+import Combine
 
-internal final class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, YPPermissionCheckable {
-    var didCapturePhoto: ((UIImage) -> Void)?
-    let v: YPCameraView!
+public final class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, YPPermissionCheckable {
+    var didCapturePhotos: (([UIImage]) -> Void)?
+    public let v: YPCameraView!
 
     private let photoCapture = YPPhotoCaptureHelper()
     private var isInited = false
     private var videoZoomFactor: CGFloat = 1.0
+    @Published public var capturedImages: [UIImage] = []
 
-    override internal func loadView() {
+    public override func loadView() {
         view = v
     }
 
@@ -40,13 +42,14 @@ internal final class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, 
         YPDeviceOrientationHelper.shared.stopDeviceOrientationNotifier()
     }
     
-    override internal func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         v.flashButton.isHidden = true
         v.flashButton.addTarget(self, action: #selector(flashButtonTapped), for: .touchUpInside)
         v.shotButton.addTarget(self, action: #selector(shotButtonTapped), for: .touchUpInside)
         v.flipButton.addTarget(self, action: #selector(flipButtonTapped), for: .touchUpInside)
+        v.doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         
         // Prevent flip and shot button clicked at the same time
         v.shotButton.isExclusiveTouch = true
@@ -134,6 +137,9 @@ internal final class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, 
         }
     }
     
+    @objc
+    func doneButtonTapped() {}
+    
     func shoot() {
         // Prevent from tapping multiple times in a row
         // causing a crash
@@ -144,9 +150,7 @@ internal final class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, 
             guard let shotImage = UIImage(data: imageData) else {
                 return
             }
-            
-            self.photoCapture.stopCamera()
-            
+                        
             var image = shotImage
             // Crop the image if the output needs to be square.
             if YPConfig.onlySquareImagesFromCamera {
@@ -158,10 +162,17 @@ internal final class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, 
                 image = self.flipImage(image: image)
             }
             
-            let noOrietationImage = image.resetOrientation()
+            let resultImage = image.resetOrientation().resizedImageIfNeeded()
+
             
             DispatchQueue.main.async {
-                self.didCapturePhoto?(noOrietationImage.resizedImageIfNeeded())
+                if YPConfig.isMultipleImageCaptureEnabled {
+                    self.capturedImages.append(resultImage)
+                    self.v.shotButton.isEnabled = true
+                } else {
+                    self.didCapturePhotos?([resultImage])
+                    self.photoCapture.stopCamera()
+                }
             }
         }
     }

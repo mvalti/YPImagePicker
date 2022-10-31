@@ -55,15 +55,17 @@ public struct YPImagePickerConfiguration {
 
     /// Scroll to change modes, defaults to true
     public var isScrollToChangeModesEnabled = true
+    
+    public var isMultipleImageCaptureEnabled = true
 
     /// Set this to true if you want to force the camera output to be a squared image. Defaults to true
     public var onlySquareImagesFromCamera = true
     
     /// Enables selecting the front camera by default, useful for avatars. Defaults to false
-    public var usesFrontCamera = false
+    public var usesFrontCamera = true
     
     /// Adds a Filter step in the photo taking process.  Defaults to true
-    public var showsPhotoFilters = true
+    public var showsPhotoFilters = false
     
     /// Adds a Video Trimmer step in the video taking process.  Defaults to true
     public var showsVideoTrimmer = true
@@ -85,7 +87,7 @@ public struct YPImagePickerConfiguration {
     public var screens: [YPPickerScreen] = [.library, .photo]
 
     /// Adds a Crop step in the photo taking process, after filters.  Defaults to .none
-    public var showsCrop: YPCropType = .none
+    public var showsCrop: YPCropType = .rectangle(ratio: 1)
     
     /// Controls the visibility of a grid on crop stage. Default it false
     public var showsCropGridOverlay = false
@@ -291,7 +293,7 @@ public struct YPConfigVideo {
 /// Encapsulates gallery specific settings.
 public struct YPConfigSelectionsGallery {
     /// Defines if the remove button should be hidden when showing the gallery. Default is true.
-    public var hidesRemoveButton = true
+    public var hidesRemoveButton = false
 }
 
 public enum YPItemOverlayType {
